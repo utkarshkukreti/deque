@@ -51,6 +51,7 @@ use std::sync::atomic::Ordering::{SeqCst, Acquire, Release, Relaxed};
 // Initial size for a buffer.
 static MIN_SIZE: usize = 32;
 
+#[derive(Debug)]
 struct Deque<T: Send> {
     bottom: AtomicIsize,
     top: AtomicIsize,
@@ -61,6 +62,7 @@ struct Deque<T: Send> {
 /// one side of the deque, and uses `push` and `pop` method to manipulate it.
 ///
 /// There may only be one worker per deque.
+#[derive(Debug)]
 pub struct Worker<T: Send> {
     deque: Arc<Deque<T>>,
 
@@ -73,6 +75,7 @@ pub struct Worker<T: Send> {
 /// The stealing half of the work-stealing deque. Stealers have access to the
 /// opposite end of the deque from the worker, and they only have access to the
 /// `steal` method.
+#[derive(Debug)]
 pub struct Stealer<T: Send> {
     deque: Arc<Deque<T>>,
 }
